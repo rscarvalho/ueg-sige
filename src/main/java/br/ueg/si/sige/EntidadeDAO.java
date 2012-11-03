@@ -55,7 +55,7 @@ public class EntidadeDAO {
      * busca todas as entidades cadastradas no sistema
      * @return ArrayList
      */
-    public static ArrayList buscarTodos() {
+    public static ArrayList<Entidade> buscarTodos() {
         return buscaPorNome("");
     }
 
@@ -65,7 +65,7 @@ public class EntidadeDAO {
      * @param campos Map
      * @return ArrayList
      */
-    public static ArrayList buscaParametrizada(Map campos) {
+    public static ArrayList<Entidade> buscaParametrizada(Map<String, Object> campos) {
         SigeDataBase db = new SigeDataBase();
         StringBuffer sb = new StringBuffer(
                 "SELECT cd_entidade FROM entidades WHERE true ");
@@ -106,7 +106,7 @@ public class EntidadeDAO {
 
             ResultSet rs = db.executeQuery();
             if(rs.next()){
-                ArrayList resultado = new ArrayList();
+                ArrayList<Entidade> resultado = new ArrayList<Entidade>();
                 do{
                     Entidade entidade = buscaPorCodigo(rs.getInt("cd_entidade"));
                     resultado.add(entidade);
@@ -129,7 +129,7 @@ public class EntidadeDAO {
      * @param nome String
      * @return ArrayList
      */
-    public static ArrayList buscaPorNome(String nome) {
+    public static ArrayList<Entidade> buscaPorNome(String nome) {
         SigeDataBase db = new SigeDataBase();
         try {
             db.prepareStatement(
@@ -137,7 +137,7 @@ public class EntidadeDAO {
             db.setString(1, '%' + nome + '%');
             ResultSet rs = db.executeQuery();
             if (rs.next()) {
-                ArrayList resultado = new ArrayList();
+                ArrayList<Entidade> resultado = new ArrayList<Entidade>();
                 do {
                     Entidade entidade = EntidadeDAO.buscaPorCodigo(rs.getInt("cd_entidade"));
                     resultado.add(entidade);

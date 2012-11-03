@@ -5,15 +5,15 @@ import java.sql.*;
 
 
 public class PermissaoDAO {
-    public static ArrayList buscaPorModulo(Modulo modulo) {
-        ArrayList modulos = ModuloDAO.buscaPorPai(modulo);
+    public static ArrayList<Permissao> buscaPorModulo(Modulo modulo) {
+        ArrayList<Modulo> modulos = ModuloDAO.buscaPorPai(modulo);
         if (modulos != null) {
             SigeDataBase db = new SigeDataBase();
-            ArrayList resultado = new ArrayList();
+            ArrayList<Permissao> resultado = new ArrayList<Permissao>();
             try {
                 db.prepareStatement(
                         "SELECT cd_permissao FROM permissoes WHERE cd_modulo=?");
-                for (Iterator iter = modulos.iterator(); iter.hasNext(); ) {
+                for (Iterator<Modulo> iter = modulos.iterator(); iter.hasNext(); ) {
                     //coleta todas as permissoes referentes a cada modulo
                     Modulo item = (Modulo) iter.next();
                     db.setInt(1, item.getCodigo());
@@ -92,13 +92,13 @@ public class PermissaoDAO {
         return null;
     }
 
-    public static ArrayList buscarPermissoes() {
+    public static ArrayList<Permissao> buscarPermissoes() {
         SigeDataBase db = new SigeDataBase();
         try {
             db.createStatement();
             ResultSet rs = db.executeQuery("SELECT * FROM permissoes");
             if (rs.next()) {
-                ArrayList resultado = new ArrayList();
+                ArrayList<Permissao> resultado = new ArrayList<Permissao>();
                 do {
                     Permissao permissao = new Permissao();
                     permissao.setCodigo(rs.getInt("cd_permissao"));
@@ -120,7 +120,7 @@ public class PermissaoDAO {
         return null;
     }
 
-    public static ArrayList buscaParametrizada(Map campos) {
+    public static ArrayList<Permissao> buscaParametrizada(Map<String, Object> campos) {
         SigeDataBase db = new SigeDataBase();
         String modulo = (String) campos.get("modulo");
         String descricao = (String) campos.get("descricao");
@@ -135,7 +135,7 @@ public class PermissaoDAO {
             db.setInt(2, moduloResultado.getCodigo());
             ResultSet rs = db.executeQuery();
             if (rs.next()) {
-                ArrayList resultado = new ArrayList();
+                ArrayList<Permissao> resultado = new ArrayList<Permissao>();
                 do {
                     Permissao permissao = PermissaoDAO.buscaPorCodigo(rs.getInt("cd_permissao"));
                     resultado.add(permissao);

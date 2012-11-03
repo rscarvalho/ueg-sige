@@ -28,13 +28,13 @@ public class EntidadeForm extends HttpServlet {
             response.sendRedirect("login");
         }
         if (request.getParameter("action") == null) {
-            ArrayList entidades = EntidadeDAO.buscarTodos();
+            ArrayList<Entidade> entidades = EntidadeDAO.buscarTodos();
             showFormListaEntidades(request, response, entidades);
         } else {
             String action = request.getParameter("action");
             if (action.equals("incluir")) {
                 if (checkPermissions(request, "incluir")) {
-                    //processo de inclusão de nova entidade
+                    //processo de inclusao de nova entidade
                     incluirEntidade(request, response);
                 } else {
                     showError(request, response);
@@ -56,7 +56,7 @@ public class EntidadeForm extends HttpServlet {
             } else if (action.equals("pesquisar")) {
                 //busca simples
                 String pesquisa = request.getParameter("search");
-                ArrayList entidades = EntidadeDAO.buscaPorNome(pesquisa);
+                ArrayList<Entidade> entidades = EntidadeDAO.buscaPorNome(pesquisa);
                 showFormListaEntidades(request, response, entidades);
             } else {
                 //busca avançada
@@ -66,7 +66,7 @@ public class EntidadeForm extends HttpServlet {
                             forward(request, response);
                 } else {
                     //processa a pesquisa
-                    Map campos = new HashMap();
+                    Map<String, Object> campos = new HashMap<String, Object>();
                     try {
                         if (!request.getParameter("nome").equals("")) {
                             campos.put("nome", request.getParameter("nome"));
@@ -95,7 +95,7 @@ public class EntidadeForm extends HttpServlet {
                     } catch (Exception ex) {
 
                     }
-                    ArrayList entidades = EntidadeDAO.buscaParametrizada(campos);
+                    ArrayList<Entidade> entidades = EntidadeDAO.buscaParametrizada(campos);
                     showFormListaEntidades(request, response, entidades);
                 }
             }
@@ -126,7 +126,7 @@ public class EntidadeForm extends HttpServlet {
                 erro = "Entidade não excluída";
             }
             request.setAttribute("erro", erro);
-            ArrayList entidades = EntidadeDAO.buscarTodos();
+            ArrayList<Entidade> entidades = EntidadeDAO.buscarTodos();
             showFormListaEntidades(request, response, entidades);
         }
     }
@@ -151,7 +151,7 @@ public class EntidadeForm extends HttpServlet {
                 erro = "Entidade não alterada";
             }
             request.setAttribute("erro", erro);
-            ArrayList entidades = EntidadeDAO.buscarTodos();
+            ArrayList<Entidade> entidades = EntidadeDAO.buscarTodos();
             showFormListaEntidades(request, response, entidades);
         }
     }
@@ -176,7 +176,7 @@ public class EntidadeForm extends HttpServlet {
                 erro = "Entidade nao incluida";
             }
             request.setAttribute("erro", erro);
-            ArrayList entidades = EntidadeDAO.buscarTodos();
+            ArrayList<Entidade> entidades = EntidadeDAO.buscarTodos();
             showFormListaEntidades(request, response, entidades);
         }
     }
@@ -237,7 +237,7 @@ public class EntidadeForm extends HttpServlet {
 
     private void showFormListaEntidades(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        ArrayList entidades) throws IOException,
+                                        ArrayList<Entidade> entidades) throws IOException,
             ServletException {
         request.setAttribute("entidades", entidades);
         request.getRequestDispatcher("entidades.jsp").forward(request, response);
@@ -245,7 +245,7 @@ public class EntidadeForm extends HttpServlet {
 
     public boolean checkPermissions(HttpServletRequest request,
                                     String descricao) {
-        HashMap campos = new HashMap();
+        HashMap<String, Object> campos = new HashMap<String, Object>();
         campos.put("modulo", "entidade");
         campos.put("descricao", descricao);
         Usuario usuario = (Usuario) request.getSession().getAttribute(

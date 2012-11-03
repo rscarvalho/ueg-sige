@@ -2,8 +2,6 @@ package br.ueg.si.sige;
 
 import java.sql.*;
 import java.util.*;
-import java.text.*;
-import java.net.*;
 
 /**
  *
@@ -32,7 +30,7 @@ public class BoletimDAO {
                 db.prepareStatement("INSERT INTO itensboletim " +
                         "(cd_boletim,cd_disciplina,bimes_letivo,nota,faltas) VALUES(?,?,?,?,?)");
                 
-                for (Iterator iter = boletim.getItensBoletim().iterator();iter.hasNext();){
+                for (Iterator<ItemBoletim> iter = boletim.getItensBoletim().iterator();iter.hasNext();){
                     ItemBoletim item = (ItemBoletim) iter.next();
                     db.setInt(1, boletim.getCodigo());
                     db.setInt(2, item.getDisciplina().getCodigo());
@@ -115,7 +113,7 @@ public class BoletimDAO {
             db.prepareStatement("INSERT INTO itensboletim (cd_boletim, cd_disciplina, " +
                     "bimes_letivo, nota, faltas) VALUES(?,?,?,?,?)");
             
-            for (Iterator iter = boletim.getItensBoletim().iterator();iter.hasNext();){
+            for (Iterator<ItemBoletim> iter = boletim.getItensBoletim().iterator();iter.hasNext();){
                 ItemBoletim item = (ItemBoletim) iter.next();
                 db.setInt(1, boletim.getCodigo());
                 db.setInt(2, item.getDisciplina().getCodigo());
@@ -130,7 +128,7 @@ public class BoletimDAO {
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            try {http://www.google.com.br/
+            try {
                 db.getConn().rollback();
                 db.closeConnection();
             } catch (SQLException ex1) {
@@ -158,9 +156,9 @@ public class BoletimDAO {
                 boletim.setCodigo(rs.getInt("cd_boletim"));
                 boletim.setAnoLetivo(rs.getInt("ano_letivo"));
                 boletim.setTurma(new TurmaDAO().buscaPorCodigo(rs.getInt("cd_turma")));
-                boletim.setEntidade(new EntidadeDAO().buscaPorCodigo(rs.getInt("cd_entidade")));
+                boletim.setEntidade(EntidadeDAO.buscaPorCodigo(rs.getInt("cd_entidade")));
                 boletim.setMatricula(new MatriculaDAO().buscaPorCodigo(rs.getInt("cd_matricula")));
-                boletim.setItensBoletim(new HashSet());
+                boletim.setItensBoletim(new HashSet<ItemBoletim>());
                 rs.close();
                 
                 db.prepareStatement("SELECT * FROM itensboletim WHERE cd_boletim=?");
@@ -189,7 +187,7 @@ public class BoletimDAO {
     }
     
     
-    public Set buscaParametrizada(Map campos){
+    public Set<Boletim> buscaParametrizada(Map<String, Object> campos){
         
         SigeDataBase db = new SigeDataBase();
         
@@ -225,7 +223,7 @@ public class BoletimDAO {
             ResultSet rs = db.executeQuery(query);
             
             if (rs.next()){
-                Set resultado = new HashSet();
+                Set<Boletim> resultado = new HashSet<Boletim>();
                 do{
                     Boletim boletim = this.buscaPorCodigo(rs.getInt("cd_boletim"));
                     resultado.add(boletim);

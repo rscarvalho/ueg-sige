@@ -1,70 +1,67 @@
 package br.ueg.si.sige;
 
-import java.util.*;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.*;
+import java.util.Set;
 
-public class Boletim implements Serializable{
-    
-    private int codigo;
-    private int anoLetivo;
-    private Turma turma;
-    private Entidade entidade;
-    private Matricula matricula;
-    private Set itensBoletim;
-    
-  
-    public Boletim() {
-        //
-    }
+public class Boletim implements Serializable {
+	private static final long serialVersionUID = 2889965759373967365L;
+	private int codigo;
+	private int anoLetivo;
+	private Turma turma;
+	private Entidade entidade;
+	private Matricula matricula;
+	private Set<ItemBoletim> itensBoletim;
 
-    public int getCodigo() {
-        return codigo;
-    }
+	public Boletim() {
+		//
+	}
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
+	public int getCodigo() {
+		return codigo;
+	}
 
-    public int getAnoLetivo() {
-        return anoLetivo;
-    }
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 
-    public void setAnoLetivo(int anoLetivo) {
-        this.anoLetivo = anoLetivo;
-    }
+	public int getAnoLetivo() {
+		return anoLetivo;
+	}
 
-    public Turma getTurma() {
-        return turma;
-    }
+	public void setAnoLetivo(int anoLetivo) {
+		this.anoLetivo = anoLetivo;
+	}
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
-    }
+	public Turma getTurma() {
+		return turma;
+	}
 
-    public Entidade getEntidade() {
-        return entidade;
-    }
+	public void setTurma(Turma turma) {
+		this.turma = turma;
+	}
 
-    public void setEntidade(Entidade entidade) {
-        this.entidade = entidade;
-    }
+	public Entidade getEntidade() {
+		return entidade;
+	}
 
-    public Matricula getMatricula() {
-        return matricula;
-    }
+	public void setEntidade(Entidade entidade) {
+		this.entidade = entidade;
+	}
 
-    public void setMatricula(Matricula matricula) {
-        this.matricula = matricula;
-    }
+	public Matricula getMatricula() {
+		return matricula;
+	}
 
-    public Set getItensBoletim() {
-        return itensBoletim;
-    }
+	public void setMatricula(Matricula matricula) {
+		this.matricula = matricula;
+	}
 
-    public void setItensBoletim(Set itensBoletim) {
-        this.itensBoletim = itensBoletim;
-    }
-    
+	public Set<ItemBoletim> getItensBoletim() {
+		return itensBoletim;
+	}
+
+	public void setItensBoletim(Set<ItemBoletim> itensBoletim) {
+		this.itensBoletim = itensBoletim;
+	}
+
 }

@@ -6,8 +6,10 @@ import java.io.*;
 import java.util.*;
 
 public class AlunoForm extends HttpServlet {
+	private static final long serialVersionUID = -2674206520689109277L;
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         if(request.getSession().getAttribute("usuarioAcademico")==null){
             response.sendRedirect("/login");
@@ -20,14 +22,14 @@ public class AlunoForm extends HttpServlet {
             if (action.equals("incluir")) {
                 IncluirAluno(request, response);
             } else if (action.equals("editar")) {
-                //edição
+                //edicao
                 editarUsuario(request, response);
             } else if (action.equals("excluir")) {
-                //exclusão
+                //exclusao
                 excluirAluno(request, response);
             } else if (action.equals("pesquisar")) {
                 //pesquisa
-                ArrayList alunos = AlunoDAO.buscaPorNome(request.getParameter(
+                ArrayList<Aluno> alunos = AlunoDAO.buscaPorNome(request.getParameter(
                         "pesquisa"));
                 showFormListaAlunos(request, response, "Resultados da busca",
                                     alunos);
@@ -97,7 +99,7 @@ public class AlunoForm extends HttpServlet {
         } else {
             //inclui o aluno
             Aluno aluno = fillAluno(request);
-            ArrayList existe = AlunoDAO.buscaPorNome(aluno.getNome());
+            ArrayList<Aluno> existe = AlunoDAO.buscaPorNome(aluno.getNome());
             if (existe != null) {
                 //mostra erro
                 String message = "Aluno já existe";
@@ -167,7 +169,7 @@ public class AlunoForm extends HttpServlet {
                                 HttpServletResponse response, Aluno aluno,
                                 String erro) throws IOException,
             ServletException {
-        ArrayList entidades = EntidadeDAO.buscarTodos();
+        ArrayList<Entidade> entidades = EntidadeDAO.buscarTodos();
         request.setAttribute("entidades", entidades);
         request.setAttribute("aluno", aluno);
         request.setAttribute("erro", erro);
@@ -178,16 +180,16 @@ public class AlunoForm extends HttpServlet {
     private void showListaAlunos(HttpServletRequest request,
                                  HttpServletResponse response) throws
             ServletException, IOException {
-        Map campos = new HashMap();
+//        Map campos = new HashMap();
         Entidade entidade = ((Usuario)request.getSession().getAttribute(
                                     "usuarioAcademico")).getEntidade();
-        ArrayList alunos = AlunoDAO.buscaPorEntidade(entidade);
+        ArrayList<Aluno> alunos = AlunoDAO.buscaPorEntidade(entidade);
         showFormListaAlunos(request, response, null, alunos);
     }
 
     private void showFormListaAlunos(HttpServletRequest request,
                                      HttpServletResponse response,
-                                     String erro, ArrayList alunos) throws
+                                     String erro, ArrayList<Aluno> alunos) throws
             IOException, ServletException {
         request.setAttribute("erro", erro);
         request.setAttribute("alunos", alunos);

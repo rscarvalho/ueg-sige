@@ -6,7 +6,9 @@ import java.io.*;
 import java.util.*;
 
 public class LoginForm extends HttpServlet {
-    /**
+	private static final long serialVersionUID = 5291710812877995620L;
+
+	/**
      * Sobrescreve doGet em HttpServlet
      * @param request HttpServletRequest
      * @param response HttpServletResponse
@@ -184,15 +186,15 @@ public class LoginForm extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request,
                         response);
             } else {
-                Map campos = new HashMap();
+                Map<String, Object> campos = new HashMap<String, Object>();
                 campos.put("modulo", "sigegerencial");
 
-                //verifica se o usuário possui permissões no módulo gerencial
+                //verifica se o usuario possui permissões no modulo gerencial
                 Modulo moduloGerencial = (Modulo) ModuloDAO.buscaPorNome(
                         "sigegerencial").get(0);
-                ArrayList permissaoGerencial = PermissaoDAO.buscaPorModulo(
+                ArrayList<Permissao> permissaoGerencial = PermissaoDAO.buscaPorModulo(
                         moduloGerencial);
-                for (Iterator iter = permissaoGerencial.iterator();
+                for (Iterator<Permissao> iter = permissaoGerencial.iterator();
                                      iter.hasNext(); ) {
                     Permissao item = (Permissao) iter.next();
                     if (usuario.isPermitted(item)) {
@@ -208,9 +210,9 @@ public class LoginForm extends HttpServlet {
                 //verifica se o usuário possui permissões no módulo acadêmico
                 Modulo moduloAcademico = (Modulo) ModuloDAO.buscaPorNome(
                         "academico").get(0);
-                ArrayList permissaoAcademico = PermissaoDAO.buscaPorModulo(
+                ArrayList<Permissao> permissaoAcademico = PermissaoDAO.buscaPorModulo(
                         moduloAcademico);
-                for (Iterator iter = permissaoAcademico.iterator();
+                for (Iterator<Permissao> iter = permissaoAcademico.iterator();
                                      iter.hasNext(); ) {
                     Permissao item = (Permissao) iter.next();
                     if (usuario.isPermitted(item)) {

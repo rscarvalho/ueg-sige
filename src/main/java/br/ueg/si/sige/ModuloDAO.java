@@ -16,14 +16,14 @@ import java.util.*;
  * @version 1.0
  */
 public class ModuloDAO {
-    public static ArrayList buscaPorPai(Modulo modulo){
+    public static ArrayList<Modulo> buscaPorPai(Modulo modulo){
         SigeDataBase db = new SigeDataBase();
         try {
             db.prepareStatement("SELECT cd_modulo FROM modulos WHERE cd_modulo_pai=?");
             db.setInt(1, modulo.getCodigo());
             ResultSet rs = db.executeQuery();
             if(rs.next()){
-                ArrayList resultado = new ArrayList();
+                ArrayList<Modulo> resultado = new ArrayList<Modulo>();
                 do{
                    Modulo moduloTemp = buscaPorCodigo(rs.getInt("cd_modulo"));
                    resultado.add(moduloTemp);
@@ -68,14 +68,14 @@ public class ModuloDAO {
         }
     }
 
-    public static ArrayList buscaPorNome(String nome) {
+    public static ArrayList<Modulo> buscaPorNome(String nome) {
         SigeDataBase db = new SigeDataBase();
         try {
             db.prepareStatement("SELECT * FROM modulos WHERE lower(ds_modulo) LIKE lower(?)");
             db.setString(1, '%' + nome + '%');
             ResultSet rs = db.executeQuery();
             if (rs.next()) {
-                ArrayList resultado = new ArrayList();
+                ArrayList<Modulo> resultado = new ArrayList<Modulo>();
                 do {
                     Modulo modulo = new Modulo();
                     modulo.setCodigo(rs.getInt("cd_modulo"));

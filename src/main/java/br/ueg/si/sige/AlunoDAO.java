@@ -3,7 +3,6 @@ package br.ueg.si.sige;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.*;
-import java.text.*;
 
 /**
  * <p>Title: </p>
@@ -19,11 +18,11 @@ import java.text.*;
  */
 public class AlunoDAO {
     
-    public static ArrayList buscarTodos() {
+    public static ArrayList<Aluno> buscarTodos() {
         return buscaPorNome("");
     }
     
-    public static ArrayList buscaPorNome(String nome) {
+    public static ArrayList<Aluno> buscaPorNome(String nome) {
         SigeDataBase db = new SigeDataBase();
         try {
             db.prepareStatement(
@@ -31,7 +30,7 @@ public class AlunoDAO {
             db.setString(1, '%' + nome + '%');
             ResultSet rs = db.executeQuery();
             if (rs.next()) {
-                ArrayList resultado = new ArrayList();
+                ArrayList<Aluno> resultado = new ArrayList<Aluno>();
                 do {
                     Aluno aluno = buscaPorCodigo(rs.getInt("cd_aluno"));
                     resultado.add(aluno);
@@ -241,16 +240,16 @@ public class AlunoDAO {
         
     }
     
-    public static ArrayList buscaPorEntidade(Entidade entidade){
+    public static ArrayList<Aluno> buscaPorEntidade(Entidade entidade){
         SigeDataBase db = new SigeDataBase();
         try{
             
             db.prepareStatement("SELECT cd_aluno FROM alunos WHERE cd_entidade=?");
             db.setInt(1, entidade.getCodigo());
             ResultSet rs = db.executeQuery();
-            ArrayList ret = null;
+            ArrayList<Aluno> ret = null;
             if(rs.next()){
-                ret = new ArrayList();
+                ret = new ArrayList<Aluno>();
                 do{
                     Aluno aluno = AlunoDAO.buscaPorCodigo(rs.getInt("cd_aluno"));
                     ret.add(aluno);
@@ -266,7 +265,7 @@ public class AlunoDAO {
         return null;
     }
     
-    public static ArrayList buscaPorMatriculas(boolean matriculados){
+    public static ArrayList<Aluno> buscaPorMatriculas(boolean matriculados){
         SigeDataBase db = new SigeDataBase();
         String comp = (matriculados)?"":"not";
         try{
@@ -274,11 +273,12 @@ public class AlunoDAO {
                     " in(select cd_aluno from matriculas)";
             db.createStatement();
             ResultSet rs = db.executeQuery(query);
-            ArrayList resultado = null;
+            ArrayList<Aluno> resultado = null;
             if(rs.next()){
-                resultado = new ArrayList();
+                resultado = new ArrayList<Aluno>();
                 do{
                     Aluno aluno = AlunoDAO.buscaPorCodigo(rs.getInt("cd_aluno"));
+                    resultado.add(aluno);
                 }while(rs.next());
             }
             rs.close();
@@ -290,7 +290,7 @@ public class AlunoDAO {
         return null;
     }
     
-    public static ArrayList buscaParametrizada(Map campos) {
+    public static ArrayList<Aluno> buscaParametrizada(Map<String, Object> campos) {
         Object[] params = new String[campos.size()];
         int i = 0;
         String q = "SELECT cd_aluno FROM alunos WHERE true ";
@@ -332,12 +332,12 @@ public class AlunoDAO {
         SigeDataBase db = new SigeDataBase();
         try {
             db.createStatement();
-            Set keys = campos.keySet();
+//            Set<String> keys = campos.keySet();
             i = 0;
             ResultSet rs = db.executeQuery(query);
-            ArrayList resultado = null;
+            ArrayList<Aluno> resultado = null;
             if (rs.next()) {
-                resultado = new ArrayList();
+                resultado = new ArrayList<Aluno>();
                 do {
                     Aluno aluno = AlunoDAO.buscaPorCodigo(rs.getInt("cd_aluno"));
                     resultado.add(aluno);
