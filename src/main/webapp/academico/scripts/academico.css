@@ -1,0 +1,182 @@
+BODY{
+ 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	margin: 0 0 0 0;
+}
+
+a:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	font-variant: normal;
+	color: #005A00;
+	text-decoration: none;
+}
+
+a:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	font-variant: normal;
+	color: #005A00;
+	text-decoration: none;
+}
+
+a:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	font-variant: normal;
+	color: #009F00;
+	text-decoration: none;
+}
+
+.menu {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	font-weight: bold;
+	font-variant: normal;
+	color: #005A00;
+	text-decoration: none;
+}
+.link_banner:link{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.link_banner:visited{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	color: #000000;
+	text-decoration: none;
+}
+
+.link_banner:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+.tabela1{
+	border-collapse: collapse;
+	background-color: #DFDFDF;
+	font-size: 9pt;
+}
+
+.tabela2{
+	border-collapse: collapse;
+	background-color: #D5D5D5;
+	font-size: 9pt;
+}
+.input{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 8pt;
+        font-weight: bold;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #000000;
+        color: #000000;
+        background-color: #DFDFDF;
+}
+select{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 8pt;
+        font-weight: bold;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #000000;
+        color: #000000;
+        background-color:#DFDFDF;
+}
+TH	{
+	color: #FFFFFF;
+	background-color: #005A00;
+	text-align: left;
+	font-size: 10pt;
+}
+
+H1	{
+	color: #FFFFFF;
+	background-color: #005A00;
+	text-align: left;
+	font-size: 16pt;
+	font-weight: bolder;
+}
+
+fieldset {
+	border-color: #000000;
+	border-width: 1px;
+}
+
+legend {
+	color: #005A00;
+	font-weight: bold;
+}
+table{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	margin: 0 0 0 0;
+	font-variant: normal;
+	font-style: normal;
+
+}
+
+.tabela3{
+      border-color:#005A00;
+      border-style:solid;
+      border-width:1px;
+}
+
+
+H2    {
+      color: #FFFFFF;
+      background-color: #005A00;
+      text-align: left;
+      font-size: 12pt;
+      font-weight: bolder;
+}
+.h2   {
+      color: #FFFFFF;
+      background-color: #005A00;
+      text-align: left;
+      font-size: 12pt;
+      font-weight: bolder;
+}
+
+.tabela4      {
+      color: #FFFFFF;
+      background-color: #005A00;
+      text-align: left;
+      font-size: 10pt;
+      font-weight: bolder;
+}
+.link2:link {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10pt;
+      font-weight: bold;
+      font-variant: normal;
+      color: #FFFFFF;
+      text-decoration: none;
+}
+.link2:visited {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10pt;
+      font-weight: bold;
+      font-variant: normal;
+      color: #FFFFFF;
+      text-decoration: none;
+}
+.link2:hover {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10pt;
+      font-weight: bold;
+      font-variant: normal;
+      color: #009F00;
+      text-decoration: none;
+}

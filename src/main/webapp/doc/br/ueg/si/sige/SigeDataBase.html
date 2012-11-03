@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><!--JBuilder QuickDoc-->
+<HEAD>
+<TITLE>Class br.ueg.si.sige.SigeDataBase</TITLE><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+</HEAD>
+<BODY>
+
+<H2>
+<FONT SIZE="-1">br.ueg.si.sige</FONT>
+<BR>Class SigeDataBase</H2>
+<DL>
+<DT>public class <B>SigeDataBase</B>
+</DL>
+<DL><DD><p>Title: </p> <p>Descrição: Classe para manipulação do banco de dados do SIGE</p><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Version:</B><DD>1.0</DD>
+<DT><B>Author:</B><DD>Rodolfo S. Carvalho</DD>
+</DL>
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Constructor Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="SigeDataBase(java.lang.String, java.lang.String, java.lang.String)"></A>
+
+<H3>SigeDataBase</H3>
+<PRE>
+public <B>SigeDataBase</B>(java.lang.String&nbsp;strCnn,
+                    java.lang.String&nbsp;user,
+                    java.lang.String&nbsp;password)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>strCnn</CODE> - String</DD>
+<DD><CODE>user</CODE> - String</DD>
+<DD><CODE>password</CODE> - String</DD>
+</DL>
+<HR>
+
+<A NAME="SigeDataBase()"></A>
+
+<H3>SigeDataBase</H3>
+<PRE>
+public <B>SigeDataBase</B>()</PRE>
+<DL><DD>SigeDataBase<DL><DD></DD></DL></DD>
+</DL>
+<DL></DL>
+<HR>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" WIDTH="100%">
+<TR BGCOLOR="#CCCCFF"><TD COLSPAN=1><FONT SIZE="+2">
+<B>Method Detail</B>
+</FONT></TD></TR></TABLE>
+
+<A NAME="createStatement()"></A>
+
+<H3>createStatement</H3>
+<PRE>
+public void <B>createStatement</B>()</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="prepareStatement(java.lang.String)"></A>
+
+<H3>prepareStatement</H3>
+<PRE>
+public void <B>prepareStatement</B>(java.lang.String&nbsp;statement)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>statement</CODE> - String</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="setString(int, java.lang.String)"></A>
+
+<H3>setString</H3>
+<PRE>
+public void <B>setString</B>(int&nbsp;parameterIndex,
+                      java.lang.String&nbsp;parameter)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>parameterIndex</CODE> - int</DD>
+<DD><CODE>parameter</CODE> - String</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="setInt(int, int)"></A>
+
+<H3>setInt</H3>
+<PRE>
+public void <B>setInt</B>(int&nbsp;parameterIndex,
+                   int&nbsp;parameter)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>parameterIndex</CODE> - int</DD>
+<DD><CODE>parameter</CODE> - int</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="setBoolean(int, boolean)"></A>
+
+<H3>setBoolean</H3>
+<PRE>
+public void <B>setBoolean</B>(int&nbsp;parameterIndex,
+                       boolean&nbsp;parameter)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>parameterIndex</CODE> - int</DD>
+<DD><CODE>parameter</CODE> - boolean</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="setFloat(int, float)"></A>
+
+<H3>setFloat</H3>
+<PRE>
+public void <B>setFloat</B>(int&nbsp;parameterIndex,
+                     float&nbsp;parameter)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>parameterIndex</CODE> - int</DD>
+<DD><CODE>parameter</CODE> - float</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="executeQuery()"></A>
+
+<H3>executeQuery</H3>
+<PRE>
+public java.sql.ResultSet <B>executeQuery</B>()</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>ResultSet</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="executeUpdate()"></A>
+
+<H3>executeUpdate</H3>
+<PRE>
+public int <B>executeUpdate</B>()</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>int</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="executeQuery(java.lang.String)"></A>
+
+<H3>executeQuery</H3>
+<PRE>
+public java.sql.ResultSet <B>executeQuery</B>(java.lang.String&nbsp;query)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>query</CODE> - String</DD>
+<DT><B>Returns:</B><DD>ResultSet</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="executeUpdate(java.lang.String)"></A>
+
+<H3>executeUpdate</H3>
+<PRE>
+public int <B>executeUpdate</B>(java.lang.String&nbsp;query)</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Parameters:</B><DD><CODE>query</CODE> - String</DD>
+<DT><B>Returns:</B><DD>int</DD>
+<DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="closeConnection()"></A>
+
+<H3>closeConnection</H3>
+<PRE>
+public void <B>closeConnection</B>()</PRE>
+<DL><DD><DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Throws:</B><DD><CODE>SQLException</CODE> - </DD>
+</DL>
+<HR>
+
+<A NAME="finalize()"></A>
+
+<H3>finalize</H3>
+<PRE>
+public void <B>finalize</B>()</PRE>
+<DL><DD>Sobrescreve finalize() de java.lang.Object<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>See Also:</B><DD>java.lang.Object#finalize()</DD>
+</DL>
+<HR>
+
+<A NAME="toString()"></A>
+
+<H3>toString</H3>
+<PRE>
+public java.lang.String <B>toString</B>()</PRE>
+<DL><DD>Sobrescreve toString() de java.lang.Object<DL><DD></DD></DL></DD>
+</DL>
+<DL><DT><B>Returns:</B><DD>String</DD>
+<DT><B>See Also:</B><DD>java.lang.Object#toString()</DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>
