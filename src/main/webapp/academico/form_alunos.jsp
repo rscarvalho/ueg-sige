@@ -6,8 +6,8 @@ Aluno aluno = (Aluno) request.getAttribute("aluno");
 boolean isUpdate = (aluno != null);
 String formAction = (String) request.getAttribute("formAction");
 DateFormat dayFormat, monthFormat, yearFormat;
-dayFormat = new SimpleDateFormat("d");
-monthFormat = new SimpleDateFormat("M");
+dayFormat = new SimpleDateFormat("dd");
+monthFormat = new SimpleDateFormat("MM");
 yearFormat = new SimpleDateFormat("yyyy");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

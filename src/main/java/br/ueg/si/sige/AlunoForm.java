@@ -145,11 +145,12 @@ public class AlunoForm extends HttpServlet {
         }
         aluno.setCodigo(codigo);
         aluno.setNome(request.getParameter("nome"));
-        aluno.setAtivo(request.getParameter("ativo").equals("true"));
-        aluno.setDocumentos(request.getParameter("documentos").equals("true"));
-        String data = request.getParameter("dia") + "/" +
-                      request.getParameter("mes") + "/" +
-                      request.getParameter("ano");
+        aluno.setAtivo(parameterToBoolean(request, "ativo"));
+        aluno.setDocumentos(parameterToBoolean(request, "documentos"));
+        String data = String.format("%02d/%02d/%04d", 
+        		Integer.parseInt(request.getParameter("dia")), 
+        		Integer.parseInt(request.getParameter("mes")), 
+        		Integer.parseInt(request.getParameter("ano")));
         aluno.setDataDeNascimentoFormatada(data);
         aluno.setEndereco(request.getParameter("endereco"));
         aluno.setEntidade(EntidadeDAO.buscaPorCodigo(Integer.parseInt(request.
@@ -163,6 +164,20 @@ public class AlunoForm extends HttpServlet {
         aluno.setResponsavel(request.getParameter("responsavel"));
         aluno.setTelefone(request.getParameter("telefone"));
         return aluno;
+    }
+    
+    private boolean hasField(HttpServletRequest request, String key) {
+    	@SuppressWarnings("unchecked")
+		Enumeration<String> names = request.getParameterNames();
+    	while(names.hasMoreElements()) {
+    		if (names.nextElement().equals(key))
+    			return true;
+    	}
+    	return false;
+    }
+    
+    private boolean parameterToBoolean(HttpServletRequest request, String key) {
+    	return hasField(request, key) ? request.getParameter(key).equalsIgnoreCase("true") : false;
     }
 
     private void showFormAlunos(HttpServletRequest request,

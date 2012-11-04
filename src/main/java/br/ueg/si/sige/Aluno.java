@@ -2,7 +2,6 @@ package br.ueg.si.sige;
 
 import java.util.Date;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.*;
 
 
@@ -63,7 +62,7 @@ public class Aluno implements Serializable {
     }
 
     public void setDataDeNascimentoFormatada(String data) {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         try {
             dataDeNascimento = df.parse(data);
         } catch (ParseException ex) {
