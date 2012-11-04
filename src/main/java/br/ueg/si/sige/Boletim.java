@@ -3,7 +3,7 @@ package br.ueg.si.sige;
 import java.io.Serializable;
 import java.util.Set;
 
-public class Boletim implements Serializable {
+public class Boletim implements Serializable, ItemHistorico {
 	private static final long serialVersionUID = 2889965759373967365L;
 	private int codigo;
 	private int anoLetivo;

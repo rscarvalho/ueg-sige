@@ -45,7 +45,6 @@
                        <tr class="tabela2">
                        </c:otherwise>
                     </c:choose>
-                    
 
                         <td><c:out value="${turma.entidade.nome}"/></td>
 

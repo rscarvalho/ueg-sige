@@ -1,14 +1,14 @@
 package br.ueg.si.sige;
 
 import java.io.*;
-import java.net.*;
-import javax.servlet.*;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.util.*;
 
 public class TurmaForm extends HttpServlet {
-    
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+	private static final long serialVersionUID = -8496615419250990103L;
+
+	private void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioGerencial");
@@ -32,17 +32,17 @@ public class TurmaForm extends HttpServlet {
                 excluirTurma(request, response);
             }else{
                 //pesquisa
-                Map campos = new HashMap();
+                Map<String, Object> campos = new HashMap<String, Object>();
                 campos.put("nome", request.getParameter("entidade"));
-                ArrayList entidades = new EntidadeDAO().buscaParametrizada(campos);
+                ArrayList<Entidade> entidades = EntidadeDAO.buscaParametrizada(campos);
                 
-                Set turmas = new HashSet();
+                Set<Turma> turmas = new HashSet<Turma>();
                 if(entidades!=null){
-                    for(Iterator iter = entidades.iterator();iter.hasNext();){
+                    for(Iterator<Entidade> iter = entidades.iterator();iter.hasNext();){
                         Entidade entidade = (Entidade)iter.next();
                         campos.clear();
                         campos.put("entidade",entidade);
-                        Set turmasTemp = new TurmaDAO().buscaParametrizada(campos);
+                        Set<Turma> turmasTemp = new TurmaDAO().buscaParametrizada(campos);
                         try{
                             turmas.addAll(turmasTemp);
                         }catch(NullPointerException ex){
@@ -50,7 +50,7 @@ public class TurmaForm extends HttpServlet {
                         }
                     }
                     if(turmas.size()==0){
-                        turmas = new TurmaDAO().buscaParametrizada(new HashMap());
+                        turmas = new TurmaDAO().buscaParametrizada(new HashMap<String, Object>());
                     }
                 }
                 
@@ -64,7 +64,7 @@ public class TurmaForm extends HttpServlet {
     throws IOException, ServletException {
         
         TurmaDAO dao = new TurmaDAO();
-        Set turmas = dao.buscaParametrizada(new HashMap());
+        Set<Turma> turmas = dao.buscaParametrizada(new HashMap<String, Object>());
         request.setAttribute("turmas",turmas );
         showMainList(request, response);
     }
@@ -177,7 +177,7 @@ public class TurmaForm extends HttpServlet {
         }catch(NumberFormatException ex){
             turma.setCodigo(0);
         }
-        turma.setEntidade(new EntidadeDAO().buscaPorCodigo(Integer.parseInt(request.getParameter("entidade"))));
+        turma.setEntidade(EntidadeDAO.buscaPorCodigo(Integer.parseInt(request.getParameter("entidade"))));
         turma.setSerie(new SerieDAO().buscaPorCodigo(Integer.parseInt(request.getParameter("serie"))));
         turma.setAno(Integer.parseInt(request.getParameter("ano")));
         turma.setLiteral(request.getParameter("literal").trim());
@@ -188,8 +188,8 @@ public class TurmaForm extends HttpServlet {
     private void showFormTurmas(final HttpServletRequest request, final HttpServletResponse response)
     throws IOException, ServletException {
         
-        ArrayList entidades = new EntidadeDAO().buscaParametrizada(new HashMap());
-        Set series = new SerieDAO().buscaParametrizada(new HashMap());
+        ArrayList<Entidade> entidades = EntidadeDAO.buscaParametrizada(new HashMap<String, Object>());
+        Set<Serie> series = new SerieDAO().buscaParametrizada(new HashMap<String, Object>());
         request.setAttribute("entidades", entidades);
         request.setAttribute("series", series);
         request.getRequestDispatcher("form_turma.jsp").forward(request, response);
@@ -197,7 +197,7 @@ public class TurmaForm extends HttpServlet {
     
     private boolean checkPermissions(HttpServletRequest request,
             String descricao) {
-        HashMap campos = new HashMap();
+        HashMap<String, Object> campos = new HashMap<String, Object>();
         campos.put("modulo", "turmas");
         campos.put("descricao", descricao);
         Usuario usuario = (Usuario) request.getSession().getAttribute(

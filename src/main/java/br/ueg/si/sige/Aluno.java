@@ -19,7 +19,8 @@ import java.text.*;
  * @version 1.0
  */
 public class Aluno implements Serializable {
-    private int codigo;
+	private static final long serialVersionUID = 2247853499430367103L;
+	private int codigo;
     private String nome;
     private String endereco;
     private String telefone;

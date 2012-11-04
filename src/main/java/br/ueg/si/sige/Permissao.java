@@ -3,7 +3,8 @@ package br.ueg.si.sige;
 import java.io.Serializable;
 
 public class Permissao implements Serializable{
-    private int codigo;
+	private static final long serialVersionUID = -2575526654099176213L;
+	private int codigo;
     private Modulo modulo;
     private String descricao;
 

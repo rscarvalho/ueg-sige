@@ -5,8 +5,9 @@ package br.ueg.si.sige;
  * UPDATE sequencia_turma SET sequencia=sequencia+1 WHERE cd_turma=<cd_turma>
  */
 public class Matricula implements java.io.Serializable{
-    
-    private int codigo;
+	private static final long serialVersionUID = 2844582279325010412L;
+
+	private int codigo;
     
     private String numeracao;
     

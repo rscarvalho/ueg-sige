@@ -8,10 +8,11 @@ import java.io.Serializable;
  * @author silvinha
  */
 public class HistoricoEscolar implements Serializable{
-    private Aluno aluno;
-    private Set boletins;
-    private Set penalidades;
-    private Set excluidos;
+	private static final long serialVersionUID = -5707744887828894446L;
+	private Aluno aluno;
+    private Set<Boletim> boletins;
+    private Set<Penalidade> penalidades;
+    private Set<ItemHistorico> excluidos;
     public int sequenciaPenalidade = 0;
     public int sequenciaBoletim = 0;
     
@@ -29,7 +30,7 @@ public class HistoricoEscolar implements Serializable{
     }
     
     public void removerPenalidade(Penalidade penalidade){
-        for(Iterator iter = penalidades.iterator();iter.hasNext();){
+        for(Iterator<Penalidade> iter = penalidades.iterator();iter.hasNext();){
             if(((Penalidade)iter.next()).getCodigo()==penalidade.getCodigo()){
                 iter.remove();
                 break;
@@ -38,7 +39,7 @@ public class HistoricoEscolar implements Serializable{
     }
     
     public Penalidade buscaPenalidadePorCodigo(int codigo){
-        for(Iterator iter = penalidades.iterator();iter.hasNext();){
+        for(Iterator<Penalidade> iter = penalidades.iterator();iter.hasNext();){
             Penalidade item = (Penalidade)iter.next();
             if(item.getCodigo()==codigo){
                 return item;
@@ -66,27 +67,27 @@ public class HistoricoEscolar implements Serializable{
         this.aluno = aluno;
     }
     
-    public Set getBoletins() {
+    public Set<Boletim> getBoletins() {
         return boletins;
     }
     
-    public void setBoletins(Set boletins) {
+    public void setBoletins(Set<Boletim> boletins) {
         this.boletins = boletins;
     }
     
-    public Set getPenalidades() {
+    public Set<Penalidade> getPenalidades() {
         return penalidades;
     }
     
-    public void setPenalidades(Set penalidades) {
+    public void setPenalidades(Set<Penalidade> penalidades) {
         this.penalidades = penalidades;
     }
     
-    public Set getExcluidos() {
+    public Set<ItemHistorico> getExcluidos() {
         return excluidos;
     }
     
-    public void setExcluidos(Set excluidos) {
+    public void setExcluidos(Set<ItemHistorico> excluidos) {
         this.excluidos = excluidos;
     }
     

@@ -10,7 +10,8 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class Entidade implements Serializable {
-    private int codigo;
+	private static final long serialVersionUID = -4901329896719056136L;
+	private int codigo;
     private String nome;
     private String telefone;
     private String endereco;

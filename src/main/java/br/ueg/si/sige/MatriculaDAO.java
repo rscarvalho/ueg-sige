@@ -45,7 +45,7 @@ public class MatriculaDAO {
                 boletim.setEntidade(matricula.getTurma().getEntidade());
                 boletim.setMatricula(matricula);
                 boletim.setTurma(matricula.getTurma());
-                boletim.setItensBoletim(new HashSet());
+                boletim.setItensBoletim(new HashSet<ItemBoletim>());
                 new BoletimDAO().incluir(boletim);
             }
         }catch(SQLException ex){
@@ -98,7 +98,7 @@ public class MatriculaDAO {
                 
                 matricula.setCodigo(rs.getInt("cd_matricula"));
                 matricula.setNumeracao(rs.getString("numeracao"));
-                matricula.setAluno(new AlunoDAO().buscaPorCodigo(rs.getInt("cd_aluno")));
+                matricula.setAluno(AlunoDAO.buscaPorCodigo(rs.getInt("cd_aluno")));
                 matricula.setTurma(new TurmaDAO().buscaPorCodigo(rs.getInt("cd_turma")));
                 rs.close();
                 db.closeConnection();
@@ -112,7 +112,7 @@ public class MatriculaDAO {
         return null;
     }
     
-    public Set buscaParametrizada(Map campos) {
+    public Set<Matricula> buscaParametrizada(Map<String, Object> campos) {
         SigeDataBase db = new SigeDataBase();
         try{
             db.createStatement();
@@ -138,7 +138,7 @@ public class MatriculaDAO {
             
             ResultSet rs = db.executeQuery(query);
             
-            Set resultado = new HashSet();
+            Set<Matricula> resultado = new HashSet<Matricula>();
             if(rs.next()){
                 do{
                     Matricula matricula = this.buscaPorCodigo(rs.getInt("cd_matricula"));

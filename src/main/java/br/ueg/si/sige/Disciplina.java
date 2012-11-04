@@ -1,8 +1,8 @@
 package br.ueg.si.sige;
 
 public class Disciplina implements java.io.Serializable{
-    
-    private int codigo;
+	private static final long serialVersionUID = 5539624435736981319L;
+	private int codigo;
     private String nome;
     private String sigla;
     private Serie serie;

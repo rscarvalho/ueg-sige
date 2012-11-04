@@ -28,11 +28,10 @@ public class SigeDataBase {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(strCnn, user, password);
         } catch (ClassNotFoundException ex) {
-            System.out.println("Classe não Encontrada: " + ex.toString());
+            System.out.println("Classe nao Encontrada: " + ex.toString());
         } catch (SQLException ex) {
             System.out.println("Erro de SQL: " + ex.toString());
         }
-
     }
 
     /**

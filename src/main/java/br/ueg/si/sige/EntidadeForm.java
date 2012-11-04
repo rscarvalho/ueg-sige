@@ -18,8 +18,9 @@ import java.util.*;
  * @version 1.0
  */
 public class EntidadeForm extends HttpServlet {
+	private static final long serialVersionUID = -7788565267535216936L;
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute(

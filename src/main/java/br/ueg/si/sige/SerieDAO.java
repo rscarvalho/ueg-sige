@@ -68,7 +68,7 @@ public class SerieDAO {
                 serie.setCodigo(rs.getInt("cd_serie"));
                 serie.setNumero(rs.getInt("numero"));
                 
-                Map campos = new HashMap();
+                Map<String, Object> campos = new HashMap<String, Object>();
                 campos.put("serie",serie);
                 
                 serie.setDisciplinas(new DisciplinaDAO().buscaParametrizada(campos));
@@ -83,7 +83,7 @@ public class SerieDAO {
         return null;
     }
     
-    public Set buscaParametrizada(Map campos) {
+    public Set<Serie> buscaParametrizada(Map<String, Object> campos) {
         SigeDataBase db = new SigeDataBase();
         try{
             String query = "SELECT cd_serie FROM series WHERE true";
@@ -96,9 +96,9 @@ public class SerieDAO {
             db.createStatement();
             
             ResultSet rs = db.executeQuery(query);
-            Set resultado = null;
+            Set<Serie> resultado = null;
             if(rs.next()){
-                resultado = new HashSet();
+                resultado = new HashSet<Serie>();
                 do{
                     Serie serie = this.buscaPorCodigo(rs.getInt("cd_serie"));
                     resultado.add(serie);

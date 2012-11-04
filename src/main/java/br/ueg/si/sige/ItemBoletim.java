@@ -6,7 +6,11 @@ package br.ueg.si.sige;
  */
 public class ItemBoletim implements java.io.Serializable{
     
-    private int codigo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3890038238948186673L;
+	private int codigo;
     private float nota;
     private int faltas;
     private int bimesLetivo;

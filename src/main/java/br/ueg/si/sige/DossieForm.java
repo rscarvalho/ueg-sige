@@ -7,8 +7,6 @@
 package br.ueg.si.sige;
 
 import java.io.*;
-import java.net.*;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.*;
@@ -19,8 +17,9 @@ import java.util.*;
  * @version
  */
 public class DossieForm extends HttpServlet {
-    
-    /** Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+	private static final long serialVersionUID = -8821153538842046183L;
+
+	/** Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      */
@@ -31,12 +30,11 @@ public class DossieForm extends HttpServlet {
             response.sendRedirect("/login");
         }
         String action = request.getParameter("action");
-        int a = 10;
         if(request.getSession().getAttribute("historico")==null){
             if(action==null){
                 if(request.getParameter("codigo")==null){
                     
-                    Map campos = new HashMap();
+                    Map<String, Object> campos = new HashMap<String, Object>();
                     if(request.getParameter("search")!=null){
                         //coloca nome na busca
                         campos.put("nome",(String)request.getParameter("search"));
@@ -152,7 +150,7 @@ public class DossieForm extends HttpServlet {
     }
 
     private Boletim buscaBoletimPorAno(final int ano, final HistoricoEscolar historico) {
-        for(Iterator iter=historico.getBoletins().iterator();iter.hasNext();){
+        for(Iterator<Boletim> iter=historico.getBoletins().iterator();iter.hasNext();){
             Boletim boletim = (Boletim) iter.next();
             if(boletim.getAnoLetivo()==ano){
                 return boletim;
@@ -183,7 +181,7 @@ public class DossieForm extends HttpServlet {
     throws IOException {
         
         HistoricoEscolar historico = new HistoricoDAO().
-                buscaPorAluno(new AlunoDAO().buscaPorCodigo(
+                buscaPorAluno(AlunoDAO.buscaPorCodigo(
                 Integer.parseInt(request.getParameter("codigo"))));
         request.getSession().setAttribute("historico", historico);
         response.sendRedirect("dossie");
@@ -196,19 +194,18 @@ public class DossieForm extends HttpServlet {
             HistoricoEscolar historico = (HistoricoEscolar) request.getSession().getAttribute("historico");
             Boletim boletimSessao = buscaBoletimPorAno(usuario.getEntidade().getAnoLetivo(), historico);
             request.getSession().setAttribute("boletim",boletimSessao);
-            int a = 0;
         }
         
         request.getRequestDispatcher("dossie_detalhe.jsp").forward(request, response);
     }
     
-    private void showMainList(final HttpServletRequest request, final HttpServletResponse response, final Usuario usuario, final Map campos)
+    private void showMainList(final HttpServletRequest request, final HttpServletResponse response, final Usuario usuario, final Map<String, Object> campos)
     throws IOException, ServletException {
         
         MatriculaDAO dao = new MatriculaDAO();
         campos.put("entidade",usuario.getEntidade());
         campos.put("anoLetivo",new Integer(usuario.getEntidade().getAnoLetivo()));
-        Set matriculas = dao.buscaParametrizada(campos);
+        Set<Matricula> matriculas = dao.buscaParametrizada(campos);
         request.setAttribute("matriculas", matriculas);
         request.getRequestDispatcher("dossie_geral.jsp").forward(request, response);
     }

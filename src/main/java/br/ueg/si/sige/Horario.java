@@ -9,10 +9,10 @@ import java.util.*;
  */
 
 public class Horario implements java.io.Serializable{
-    
-    private int codigo;
+	private static final long serialVersionUID = -6212001062401544613L;
+	private int codigo;
     private Turma turma;
-    private Set itensHorario;  
+    private Set<ItemHorario> itensHorario;  
 
     public int getCodigo() {
         return codigo;
@@ -30,11 +30,11 @@ public class Horario implements java.io.Serializable{
         this.turma = turma;
     }
 
-    public Set getItensHorario() {
+    public Set<ItemHorario> getItensHorario() {
         return itensHorario;
     }
 
-    public void setItensHorario(Set itensHorario) {
+    public void setItensHorario(Set<ItemHorario> itensHorario) {
         this.itensHorario = itensHorario;
     }
     

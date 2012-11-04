@@ -6,12 +6,10 @@
 
 package br.ueg.si.sige;
 
-import java.io.*;
-import java.net.*;
-
-import javax.servlet.*;
-import javax.servlet.http.*;
+import java.io.IOException;
 import java.util.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.*;
 
 /**
  *
@@ -19,8 +17,9 @@ import java.util.*;
  * @version
  */
 public class TransferenciaForm extends HttpServlet {
-    
-    /** Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+	private static final long serialVersionUID = 1718996449724299788L;
+
+	/** Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      */
@@ -33,14 +32,14 @@ public class TransferenciaForm extends HttpServlet {
         
         if(request.getParameter("action")==null){
             //mostra lista de alunos
-            showMainAluno(request, response, new HashMap());
+            showMainAluno(request, response, new HashMap<String, Object>());
         } else {
-            //mostra formulário para efetuar transferência
+            //mostra formulario para efetuar transferencia
             if (request.getParameter("action").equals("transferencia")){
                 showFormTransferencia(request, response);
                 //realiza pesquisa
             } else if (request.getParameter("action").equals("busca")){
-                Map campos = new HashMap();
+                Map<String, Object> campos = new HashMap<String, Object>();
                 campos.put("nome", request.getParameter("nome"));
                 showMainAluno(request, response, campos);
                                 
@@ -48,35 +47,35 @@ public class TransferenciaForm extends HttpServlet {
                 if (request.getMethod().equalsIgnoreCase("get")){
                     showFormTransferencia(request, response);
                 } else {
-                    Aluno aluno = new AlunoDAO().buscaPorCodigo(Integer.parseInt(request.getParameter("aluno")));
-                    Entidade entidade = new EntidadeDAO().buscaPorCodigo(Integer.parseInt(request.getParameter("entidade")));
-                    Map campos = new HashMap();
+                    Aluno aluno = AlunoDAO.buscaPorCodigo(Integer.parseInt(request.getParameter("aluno")));
+                    Entidade entidade = EntidadeDAO.buscaPorCodigo(Integer.parseInt(request.getParameter("entidade")));
+                    Map<String, Object> campos = new HashMap<String, Object>();
                     //busca matricula referebte ao ano letivo do aluno
                     campos.put("ano", new Integer(entidade.getAnoLetivo()));
                     campos.put("aluno", aluno);
-                    Set matriculas = new MatriculaDAO().buscaParametrizada(campos);
+                    Set<Matricula> matriculas = new MatriculaDAO().buscaParametrizada(campos);
                     campos.clear();
                     Matricula matricula = (Matricula) matriculas.iterator().next();
                     //busca boletim do aluno
                     campos.put("matricula", matricula);
-                    Set boletins = new BoletimDAO().buscaParametrizada(campos);
+                    Set<Boletim> boletins = new BoletimDAO().buscaParametrizada(campos);
                     Boletim boletim = (Boletim) boletins.iterator().next();
                     //realiza a matricula do aluno na entidade selecionada
                     aluno.setEntidade(entidade);
                     campos.clear();
                     //busca a serie da escola
                     campos.put("escolaridade",  new Integer(aluno.getEscolaridade()));
-                    Set series = new SerieDAO().buscaParametrizada(campos);
+                    Set<Serie> series = new SerieDAO().buscaParametrizada(campos);
                     Serie serie = (Serie) series.iterator().next();
                     //busca turmas da serie na escola
                     campos.clear();
                     campos.put("serie", serie);
-                    Set turmas = new TurmaDAO().buscaParametrizada(campos);
+                    Set<Turma> turmas = new TurmaDAO().buscaParametrizada(campos);
                     Turma novaTurma = null;
                     //encontra turma com vagas
-                    for(Iterator iter = turmas.iterator();iter.hasNext();){
+                    for(Iterator<Turma> iter = turmas.iterator();iter.hasNext();){
                         Turma turma = (Turma) iter.next();
-                        Map campos2 = new HashMap();
+                        Map<String, Object> campos2 = new HashMap<String, Object>();
                         campos2.put("turma", turma);
                         if(new TurmaDAO().buscaParametrizada(campos2).size() < 40){
                             novaTurma = turma;
@@ -91,7 +90,7 @@ public class TransferenciaForm extends HttpServlet {
                     try{
                         new MatriculaDAO().incluir(matriculaNova);
                         new BoletimDAO().salvarAlteracoes(boletim);
-                        new AlunoDAO().salvarAlteracoes(aluno);
+                        AlunoDAO.salvarAlteracoes(aluno);
                         //exibir tela de sucesso
                         String erro = null;
                         erro = "Transferência efetuada com sucesso";
@@ -107,22 +106,22 @@ public class TransferenciaForm extends HttpServlet {
                 }   
             }
         } 
-    private void showMainAluno(HttpServletRequest request,HttpServletResponse response, Map campos)
+    private void showMainAluno(HttpServletRequest request,HttpServletResponse response, Map<String, Object> campos)
     throws IOException,ServletException{
        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioAcademico");
        campos.put("entidade", usuario.getEntidade());
        campos.put("ativo", "true");
        campos.put("matriculado", "true");
-       ArrayList alunos = new AlunoDAO().buscaParametrizada(campos);
+       ArrayList<Aluno> alunos = AlunoDAO.buscaParametrizada(campos);
        request.setAttribute("alunos", alunos);
        request.getRequestDispatcher("transferencia.jsp").forward(request, response);
     }
     
     private void showFormTransferencia(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
-        Aluno aluno = new AlunoDAO().buscaPorCodigo(Integer.parseInt(request.getParameter("codigo")));
+        Aluno aluno = AlunoDAO.buscaPorCodigo(Integer.parseInt(request.getParameter("codigo")));
         request.setAttribute("Aluno", aluno);
-        ArrayList entidades = new EntidadeDAO().buscaParametrizada(new HashMap());
+        ArrayList<Entidade> entidades = EntidadeDAO.buscaParametrizada(new HashMap<String, Object>());
         request.setAttribute("entidades", entidades);
         request.getRequestDispatcher("form_transferencia.jsp").forward(request, response);
     } 

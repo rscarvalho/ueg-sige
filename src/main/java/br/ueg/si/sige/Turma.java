@@ -1,8 +1,11 @@
 package br.ueg.si.sige;
 
+import java.util.Set;
+
 public class Turma implements java.io.Serializable{
-    
-    private int codigo;
+	private static final long serialVersionUID = 7984561126613312885L;
+
+	private int codigo;
     
     private String literal;
     
@@ -12,7 +15,7 @@ public class Turma implements java.io.Serializable{
     
     private Entidade entidade;
     
-    private java.util.Set matriculas;
+    private Set<Matricula> matriculas;
     
     public int getCodigo() {
         return codigo;
@@ -54,11 +57,11 @@ public class Turma implements java.io.Serializable{
         this.entidade = entidade;
     }
     
-    public java.util.Set getMatriculas() {
+    public Set<Matricula> getMatriculas() {
         return matriculas;
     }
     
-    public void setMatriculas(java.util.Set matriculas) {
+    public void setMatriculas(Set<Matricula> matriculas) {
         this.matriculas = matriculas;
     }
     

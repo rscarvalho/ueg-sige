@@ -6,8 +6,9 @@ import java.io.*;
 import java.util.*;
 
 public class UsuarioForm extends HttpServlet {
+	private static final long serialVersionUID = -4471732034807005397L;
 
-    //Process the HTTP Get request
+	//Process the HTTP Get request
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         String action = request.getParameter("action");
@@ -18,7 +19,7 @@ public class UsuarioForm extends HttpServlet {
             response.sendRedirect("login");
         }
         if (action == null) {
-            ArrayList usuarios = null;
+            ArrayList<Usuario> usuarios = null;
             String redirect = "usuarios.jsp";
             if (search == null) {
                 usuarios = UsuarioDAO.buscarTodos();
@@ -30,8 +31,8 @@ public class UsuarioForm extends HttpServlet {
                 } else {
                     if (request.getMethod().equalsIgnoreCase("get")) {
                         redirect = "busca_avancada.jsp";
-                        ArrayList permissoes = PermissaoDAO.buscarPermissoes();
-                        ArrayList entidades = EntidadeDAO.buscarTodos();
+                        ArrayList<Permissao> permissoes = PermissaoDAO.buscarPermissoes();
+                        ArrayList<Entidade> entidades = EntidadeDAO.buscarTodos();
                         request.setAttribute("entidades", entidades);
                         request.setAttribute("permissoes", permissoes);
                         request.setAttribute("totalPermissoes",
@@ -47,7 +48,7 @@ public class UsuarioForm extends HttpServlet {
                         String cpf = request.getParameter("cpf");
                         int totalPermissoes = Integer.parseInt(request.
                                 getParameter("totalPermissoes"));
-                        ArrayList permissoes = new ArrayList();
+                        ArrayList<Permissao> permissoes = new ArrayList<Permissao>();
                         for (int i = 0; i < totalPermissoes; i++) {
                             int codigoPermissao;
                             try {
@@ -67,7 +68,7 @@ public class UsuarioForm extends HttpServlet {
                         }
                         if(permissoes.size()==0)
                             permissoes = null;
-                        HashMap campos = new HashMap();
+                        HashMap<String, Object> campos = new HashMap<String, Object>();
                         campos.put("nomeCompleto", nomeCompleto);
                         campos.put("login", login);
                         campos.put("cpf", cpf);
@@ -128,7 +129,7 @@ public class UsuarioForm extends HttpServlet {
             } else {
                 if (request.getParameter("confirma") == null) {
                     Usuario novoUsuario = fillUsuario(request);
-                    ArrayList temp;
+                    ArrayList<?> temp;
                     if ((temp = UsuarioDAO.buscaPorLogin(novoUsuario.
                             getLogin())) != null) {
                         Usuario usuarioTemp = (Usuario) temp.get(0);
@@ -255,11 +256,12 @@ public class UsuarioForm extends HttpServlet {
         }
         int totalPermissoes = Integer.parseInt(request.getParameter(
                 "totalPermissoes"));
-        ArrayList permissoesTemp = new ArrayList();
+        ArrayList<Permissao> permissoesTemp = new ArrayList<Permissao>();
         for (int i = 0; i < totalPermissoes; i++) {
             String permissao = request.getParameter("permissao" + i);
             if (permissao != null) {
-                permissoesTemp.add(new PermissaoDAO().buscaPorCodigo(
+                new PermissaoDAO();
+				permissoesTemp.add(PermissaoDAO.buscaPorCodigo(
                         Integer.parseInt(permissao)));
             }
         }
@@ -273,7 +275,8 @@ public class UsuarioForm extends HttpServlet {
         usuario.setNomeCompleto(request.getParameter("nomeCompleto"));
         usuario.setLogin(request.getParameter("login"));
         usuario.setCPF(request.getParameter("cpf"));
-        usuario.setEntidade(new EntidadeDAO().buscaPorCodigo(Integer.
+        new EntidadeDAO();
+		usuario.setEntidade(EntidadeDAO.buscaPorCodigo(Integer.
                 parseInt(request.getParameter("entidade"))));
         usuario.setAtivo((request.getParameter("ativo").equals("true")));
         usuario.setSenha((senha!=null)?usuario.getCPF():senha);
@@ -286,9 +289,11 @@ public class UsuarioForm extends HttpServlet {
                                         String erro, Usuario novoUsuario,
                                         String action) throws
             ServletException, IOException {
-        //exibe formulário de inclusão
-        ArrayList permissoes = new PermissaoDAO().buscarPermissoes();
-        ArrayList entidades = new EntidadeDAO().buscarTodos();
+        new PermissaoDAO();
+		//exibe formulário de inclusão
+        ArrayList<?> permissoes = PermissaoDAO.buscarPermissoes();
+        new EntidadeDAO();
+		ArrayList<?> entidades = EntidadeDAO.buscarTodos();
         request.setAttribute("entidades", entidades);
         request.setAttribute("permissoes", permissoes);
         request.setAttribute("usuario", novoUsuario);
@@ -303,7 +308,7 @@ public class UsuarioForm extends HttpServlet {
 
     private boolean checkPermissions(HttpServletRequest request,
                                     String descricao) {
-        HashMap campos = new HashMap();
+        HashMap<String, Object> campos = new HashMap<String, Object>();
         campos.put("modulo", "usuarios");
         campos.put("descricao", descricao);
         Usuario usuario = (Usuario) request.getSession().getAttribute(

@@ -3,10 +3,10 @@ package br.ueg.si.sige;
 import java.util.Set;
 
 public class Serie implements java.io.Serializable{
-    
-    private int codigo;    
+	private static final long serialVersionUID = -1345915613731224752L;
+	private int codigo;    
     private int numero;    
-    private Set disciplinas;    
+    private Set<Disciplina> disciplinas;    
     private int vagas;
     
     
@@ -26,11 +26,11 @@ public class Serie implements java.io.Serializable{
         this.numero = numero;
     }
     
-    public Set getDisciplinas() {
+    public Set<Disciplina> getDisciplinas() {
         return disciplinas;
     }
     
-    public void setDisciplinas(Set disciplinas) {
+    public void setDisciplinas(Set<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 

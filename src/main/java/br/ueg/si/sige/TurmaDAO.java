@@ -89,8 +89,8 @@ public class TurmaDAO {
                 turma.setAno(rs.getInt("ano"));
                 turma.setLiteral(rs.getString("literal"));
                 turma.setSerie(new SerieDAO().buscaPorCodigo(rs.getInt("cd_serie")));
-                turma.setEntidade(new EntidadeDAO().buscaPorCodigo(rs.getInt("cd_entidade")));
-                Map campos = new HashMap();
+                turma.setEntidade(EntidadeDAO.buscaPorCodigo(rs.getInt("cd_entidade")));
+                Map<String, Object> campos = new HashMap<String, Object>();
                 campos.put("turma",turma);
                 //turma.setMatriculas(new MatriculaDAO().buscaParametrizada(campos));
             }
@@ -104,7 +104,7 @@ public class TurmaDAO {
         return null;
     }
     
-    public Set buscaParametrizada(Map campos) {
+    public Set<Turma> buscaParametrizada(Map<String, Object> campos) {
         SigeDataBase db = new SigeDataBase();
         try{
             db.createStatement();
@@ -127,10 +127,10 @@ public class TurmaDAO {
             String query = new String(sb);
             
             ResultSet rs = db.executeQuery(query);       
-            Set resultado = null;
+            Set<Turma> resultado = null;
             
             if(rs.next()){
-                resultado = new HashSet();
+                resultado = new HashSet<Turma>();
                 do{
                     Turma turma = this.buscaPorCodigo(rs.getInt("cd_turma"));
                     resultado.add(turma);

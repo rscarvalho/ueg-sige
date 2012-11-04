@@ -14,7 +14,8 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class Modulo implements Serializable{
-    private int codigo;
+	private static final long serialVersionUID = -201048368438200226L;
+	private int codigo;
     private Modulo moduloPai;
     private String descricao;
 

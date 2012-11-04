@@ -4,9 +4,9 @@ package br.ueg.si.sige;
  *
  * @author silvinha
  */
-public class Penalidade implements java.io.Serializable{
-    
-    private int codigo;
+public class Penalidade implements java.io.Serializable, ItemHistorico {
+	private static final long serialVersionUID = -2735080008820602201L;
+	private int codigo;
     private String tipo;
     private String descricao;
     private Matricula matricula;

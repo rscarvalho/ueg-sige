@@ -1,6 +1,7 @@
 <%@ page import="java.util.*, br.ueg.si.sige.*"  pageEncoding="UTF-8" %>
 <%
-ArrayList alunos = (ArrayList) request.getAttribute("alunos");
+@SuppressWarnings("unchecked")
+ArrayList<Aluno> alunos = (ArrayList<Aluno>) request.getAttribute("alunos");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -39,7 +40,7 @@ ArrayList alunos = (ArrayList) request.getAttribute("alunos");
   <%try{%>
   <%
   int i = 1;
-  for (Iterator iter = alunos.iterator(); iter.hasNext(); i++) {
+  for (Iterator<Aluno> iter = alunos.iterator(); iter.hasNext(); i++) {
     Aluno item = (Aluno) iter.next();
     String tabela = (i%2==0)?"tabela1":"tabela2";
   %>

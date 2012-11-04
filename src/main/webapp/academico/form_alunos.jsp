@@ -1,9 +1,14 @@
-<%@ page import="java.util.*, br.ueg.si.sige.*" pageEncoding="UTF-8" %>
+<%@page import="java.text.DateFormat"%>
+<%@ page import="java.util.*, java.text.*, br.ueg.si.sige.*" pageEncoding="UTF-8" %>
 <%
 Entidade entidade = ((Usuario) request.getSession().getAttribute("usuarioAcademico")).getEntidade();
 Aluno aluno = (Aluno) request.getAttribute("aluno");
 boolean isUpdate = (aluno != null);
 String formAction = (String) request.getAttribute("formAction");
+DateFormat dayFormat, monthFormat, yearFormat;
+dayFormat = new SimpleDateFormat("d");
+monthFormat = new SimpleDateFormat("M");
+yearFormat = new SimpleDateFormat("yyyy");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -36,7 +41,11 @@ function submitForm(){
  <h1>Alunos</h1>
  <form name="form1" method="post" action="alunos?action=<%=formAction%>" id="form1" >
    <table width="0" border="0">
-     <input type="hidden" name="codigo" value="<%=(isUpdate)?Integer.toString(aluno.getCodigo()):""%>" />
+     <tr>
+       <td colspan="2">
+	       <input type="hidden" name="codigo" value="<%=(isUpdate)?Integer.toString(aluno.getCodigo()):""%>" />
+       </td>
+     </tr>
      <tr>
        <td>Nome:</td>
        <td><input name="nome" type="text" class="input" id="nome" size="50" value="<%=(isUpdate)?aluno.getNome():""%>"></td>
@@ -63,11 +72,12 @@ function submitForm(){
      </tr>
      <tr>
        <td>Data de Nascimento: </td>
-       <td><input name="dia" type="text" class="input" id="dia" size="4" maxlength="2" value="<%=(isUpdate)?Integer.toString(aluno.getDataDeNascimento().getDate()):""%>" >
+       <td>
+       <input name="dia" type="text" class="input" id="dia" size="4" maxlength="2" value="<%=(isUpdate)?dayFormat.format(aluno.getDataDeNascimento()):""%>" >
        /
-       <input name="mes" type="text" class="input" id="mes" size="4" maxlength="2" value="<%=(isUpdate)?Integer.toString(aluno.getDataDeNascimento().getMonth()+1):""%>" >
+       <input name="mes" type="text" class="input" id="mes" size="4" maxlength="2" value="<%=(isUpdate)?monthFormat.format(aluno.getDataDeNascimento()):""%>" >
        /
-       <input name="ano" type="text" class="input" id="ano" size="8" maxlength="4" value="<%=(isUpdate)?Integer.toString(aluno.getDataDeNascimento().getYear()+1900):""%>" ></td>
+       <input name="ano" type="text" class="input" id="ano" size="8" maxlength="4" value="<%=(isUpdate)?yearFormat.format(aluno.getDataDeNascimento()):""%>" ></td>
      </tr>
      <tr>
        <td>Aluno ativo? </td>

@@ -7,7 +7,6 @@
 package br.ueg.si.sige;
 
 import java.io.*;
-import java.net.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,7 +18,9 @@ import java.util.*;
  * @version
  */
 public class MatriculaForm extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+	private static final long serialVersionUID = -4432571983606356904L;
+
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         Usuario usuarioAcademico = (Usuario)request.getSession().getAttribute("usuarioAcademico");
         if(usuarioAcademico==null){
@@ -29,7 +30,7 @@ public class MatriculaForm extends HttpServlet {
         }else{
             
             if(request.getParameter("action")==null){
-                HashMap campos = new HashMap();
+                HashMap<String, Object> campos = new HashMap<String, Object>();
                 if(request.getParameter("search")==null){
                     //mostrar lista
                     this.showMainList(request,response, campos);
@@ -56,15 +57,15 @@ public class MatriculaForm extends HttpServlet {
                     }else{
                         //matricula os alunos
                         int i = Integer.parseInt(request.getParameter("total"));
-                        ArrayList alunos = new ArrayList();
+                        ArrayList<Aluno> alunos = new ArrayList<Aluno>();
                         for(int j=0; j<i; i++){
                             if(request.getParameter("aluno["+j+"]")!=null){
-                                alunos.add(new AlunoDAO().buscaPorCodigo(
+                                alunos.add(AlunoDAO.buscaPorCodigo(
                                         Integer.parseInt(request.getParameter(
                                         "aluno["+j+"]"))));
                             }
                         }
-                        Set turmas = new HashSet();
+                        Set<Turma> turmas = new HashSet<Turma>();
                         /**
                          * @TODO testar (tomara q funcione)
                          */
@@ -79,22 +80,22 @@ public class MatriculaForm extends HttpServlet {
     
     private void efetuaMatriculas(HttpServletRequest request, HttpServletResponse response, Usuario usuarioAcademico,Serie serie)
     throws IOException, ServletException{
-        Map campos = new HashMap();
+        Map<String, Object> campos = new HashMap<String, Object>();
         
         campos.put("entidade",usuarioAcademico.getEntidade());
         campos.put("anoLetivo", new Integer(usuarioAcademico.getEntidade().getAnoLetivo()));
         campos.put("serie", serie);
         
-        Set turmas = new TurmaDAO().buscaParametrizada(campos);
+        Set<Turma> turmas = new TurmaDAO().buscaParametrizada(campos);
         campos.remove("serie");
         campos.remove("anoLetivo");
         try{
             campos.put("matriculados","false");
             campos.put("escolaridade", ""+serie.getNumero());
-            ArrayList alunos = new AlunoDAO().buscaParametrizada(campos);
-            Iterator iterAlunos = alunos.iterator();
+            List<Aluno> alunos = AlunoDAO.buscaParametrizada(campos);
+            Iterator<Aluno> iterAlunos = alunos.iterator();
             
-            for(Iterator iter = turmas.iterator();iter.hasNext();){
+            for(Iterator<Turma> iter = turmas.iterator();iter.hasNext();){
                 Turma turma = (Turma) iter.next();
                 int i = 0;
                 MatriculaDAO dao = new MatriculaDAO();
@@ -116,18 +117,18 @@ public class MatriculaForm extends HttpServlet {
             }
         }catch(Exception ex){
             request.setAttribute("erro","Problemas na efetivacao das matriculas");
-            showMainList(request, response, new HashMap());
+            showMainList(request, response, new HashMap<String, Object>());
         }
     }
     
-    private void showFormResumoMatricula(HttpServletRequest request, HttpServletResponse response,Set turmas)
+    private void showFormResumoMatricula(HttpServletRequest request, HttpServletResponse response,Set<Turma> turmas)
     throws IOException, ServletException{
         //mostra formulario de resumo
         request.setAttribute("turmas", turmas);
         request.getRequestDispatcher("resumo_matricula.jsp").forward(request, response);
     }
     
-    private void showFormExcecao(HttpServletRequest request, HttpServletResponse response, ArrayList alunos)
+    private void showFormExcecao(HttpServletRequest request, HttpServletResponse response, List<Aluno> alunos)
     throws ServletException,IOException{
         //mostra formulario de excecao
         request.setAttribute("alunos", alunos);
@@ -141,26 +142,26 @@ public class MatriculaForm extends HttpServlet {
         }else{
             
             Entidade entidade = usuarioAcademico.getEntidade();
-            Map campos = new HashMap();
+            Map<String, Object> campos = new HashMap<String, Object>();
             campos.put("entidade", entidade);
             campos.put("ano",new Integer(entidade.getAnoLetivo()));
             
             //Calculo das vagas por serie
-            Set turmas = new TurmaDAO().buscaParametrizada(campos);
-            Map series = new HashMap();
-            if(turmas==null) turmas = new HashSet();
-            for(Iterator iter = turmas.iterator(); iter.hasNext();){
+            Set<Turma> turmas = new TurmaDAO().buscaParametrizada(campos);
+            Map<Integer, Serie> series = new HashMap<Integer, Serie>();
+            if(turmas==null) turmas = new HashSet<Turma>();
+            for(Iterator<Turma> iter = turmas.iterator(); iter.hasNext();){
                 Turma turma = (Turma) iter.next();
                 Serie serie = turma.getSerie();
                 serie.setVagas(0);
                 series.put(new Integer(serie.getNumero()),serie);
             }
             
-            for(Iterator iter = turmas.iterator(); iter.hasNext();){
+            for(Iterator<Turma> iter = turmas.iterator(); iter.hasNext();){
                 Turma turma = (Turma) iter.next();
-                HashMap params = new HashMap();
+                HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("turma", turma);
-                Set matriculas = new MatriculaDAO().buscaParametrizada(params);
+                Set<Matricula> matriculas = new MatriculaDAO().buscaParametrizada(params);
                 
                 Serie serie = (Serie)series.get(new Integer(turma.getSerie().getNumero()));
                 int vagas = (40-matriculas.size())+serie.getVagas();
@@ -170,9 +171,9 @@ public class MatriculaForm extends HttpServlet {
             //fim do calculo
             
             //conversao Map <=> Set
-            Set series2 = new HashSet();
-            Set keys = series.keySet();
-            for(Iterator iter = keys.iterator(); iter.hasNext();){
+            Set<Serie> series2 = new HashSet<Serie>();
+            Set<Integer> keys = series.keySet();
+            for(Iterator<Integer> iter = keys.iterator(); iter.hasNext();){
                 Integer item = (Integer)iter.next();
                 series2.add(series.get(item));
             }
@@ -184,24 +185,24 @@ public class MatriculaForm extends HttpServlet {
         }
     }
     
-    private void showMainList(HttpServletRequest request,HttpServletResponse response, Map campos)
+    private void showMainList(HttpServletRequest request,HttpServletResponse response, Map<String, Object> campos)
     throws IOException,ServletException{
         Entidade entidade = ((Usuario)request.getSession().getAttribute("usuarioAcademico")).getEntidade();
         campos.put("entidade",entidade);
         campos.put("anoLetivo",new Integer(entidade.getAnoLetivo()-1));
         
-        Set matriculas = new MatriculaDAO().buscaParametrizada(campos);
-        Set matriculasAtuais = new HashSet();
+        Set<Matricula> matriculas = new MatriculaDAO().buscaParametrizada(campos);
+        Set<Matricula> matriculasAtuais = new HashSet<Matricula>();
         
         /*
          * retira as matriculas de alunos ja matriculados no ano letivo corrente da escola
          */
-        for(Iterator iter = matriculas.iterator();iter.hasNext();){
+        for(Iterator<Matricula> iter = matriculas.iterator();iter.hasNext();){
             Matricula matricula = (Matricula) iter.next();
             campos.clear();
             campos.put("aluno", matricula.getAluno());
             campos.put("anoLetivo", new Integer(entidade.getAnoLetivo()));
-            Set mats = new MatriculaDAO().buscaParametrizada(campos);
+            Set<Matricula> mats = new MatriculaDAO().buscaParametrizada(campos);
             if(mats.size()>0){
                 matriculasAtuais.addAll(mats);
                 iter.remove();
@@ -222,7 +223,7 @@ public class MatriculaForm extends HttpServlet {
     
     private boolean checkPermissions(HttpServletRequest request,
             String descricao) {
-        HashMap campos = new HashMap();
+        HashMap<String, Object> campos = new HashMap<String, Object>();
         campos.put("modulo", "matriculas");
         campos.put("descricao", descricao);
         Usuario usuario = (Usuario) request.getSession().getAttribute(

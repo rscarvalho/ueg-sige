@@ -1,7 +1,10 @@
 <%@ page import="br.ueg.si.sige.*, java.util.*" %>
 <%
-ArrayList permissoes = (ArrayList) request.getAttribute("permissoes");
-ArrayList entidades = (ArrayList) request.getAttribute("entidades");
+@SuppressWarnings("unchecked")
+ArrayList<Permissao> permissoes = (ArrayList<Permissao>) request.getAttribute("permissoes");
+
+@SuppressWarnings("unchecked")
+ArrayList<Entidade> entidades = (ArrayList<Entidade>) request.getAttribute("entidades");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>

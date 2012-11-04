@@ -2,8 +2,6 @@ package br.ueg.si.sige;
 
 import java.sql.*;
 import java.util.*;
-import java.text.*;
-import java.net.*;
 
 
 public class DisciplinaDAO {
@@ -99,7 +97,7 @@ public class DisciplinaDAO {
     }
     
     
-    public Set buscaParametrizada(Map campos) {
+    public Set<Disciplina> buscaParametrizada(Map<String, Object> campos) {
         
         SigeDataBase db = new SigeDataBase();
         
@@ -120,10 +118,10 @@ public class DisciplinaDAO {
             db.createStatement();
             
             ResultSet rs = db.executeQuery(query);
-            Set resultado = null;
+            Set<Disciplina> resultado = null;
             
             if(rs.next()){
-                resultado = new HashSet();
+                resultado = new HashSet<Disciplina>();
                 
                 do{
                     Disciplina disciplina = this.buscaPorCodigo(rs.getInt("cd_disciplina"));
